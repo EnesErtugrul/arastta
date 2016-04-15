@@ -1,7 +1,7 @@
 <?php
 /**
  * @package        Arastta eCommerce
- * @copyright      Copyright (C) 2015 Arastta Association. All rights reserved. (arastta.org)
+ * @copyright      Copyright (C) 2015-2016 Arastta Association. All rights reserved. (arastta.org)
  * @credits        See CREDITS.txt for credits and other copyright notices.
  * @license        GNU General Public License version 3; see LICENSE.txt
  */
@@ -203,4 +203,26 @@ if (version_compare(VERSION, '1.2.4', '<')) {
     // Update download table
     $this->db->query("ALTER TABLE `" . DB_PREFIX . "download` CHANGE `filename` `filename` varchar(255) NOT NULL");
     $this->db->query("ALTER TABLE `" . DB_PREFIX . "download` CHANGE `mask` `mask` varchar(255) NOT NULL");
+}
+
+// 1.3.0 changes;
+if (version_compare(VERSION, '1.3.0', '<')) {
+    // Insert setting table
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_admin_template', `value` = 'basic'");
+    $this->db->query("INSERT INTO " . DB_PREFIX . "setting SET store_id = '0', `code` = 'config', `key` = 'config_admin_template_message', `value` = 'show'");
+
+    // Update length_class_description table
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "length_class_description` CHANGE length_class_id length_class_id INT(11) NOT NULL");
+
+    // Update weight_class_description table
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "weight_class_description` CHANGE weight_class_id weight_class_id INT(11) NOT NULL");
+
+    // Update information_description table
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "information_description` CHANGE description description MEDIUMTEXT NOT NULL");
+
+    // Insert Module table Cart module => Popup after cart 
+    $this->db->query("INSERT INTO " . DB_PREFIX . "module SET `name` = 'Cart - Popup after Add to Cart', `code` = 'cart', `setting` = 'a:15:{s:4:\"name\";s:30:\"Cart - Popup after Add to Cart\";s:5:\"popup\";s:1:\"1\";s:5:\"theme\";s:9:\"mini_cart\";s:6:\"status\";s:1:\"1\";s:13:\"product_image\";s:1:\"1\";s:12:\"product_name\";s:1:\"1\";s:13:\"product_model\";s:1:\"0\";s:16:\"product_quantity\";s:1:\"1\";s:13:\"product_price\";s:1:\"1\";s:13:\"product_total\";s:1:\"1\";s:15:\"button_continue\";s:1:\"1\";s:11:\"button_cart\";s:1:\"1\";s:15:\"button_checkout\";s:1:\"1\";s:6:\"coupon\";s:1:\"1\";s:7:\"message\";s:1:\"1\";}'");
+
+    // Update layout_module table
+    $this->db->query("ALTER TABLE `" . DB_PREFIX . "layout_module` CHANGE `position` `position` varchar(64) NOT NULL");
 }

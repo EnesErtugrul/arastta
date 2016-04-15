@@ -22,6 +22,37 @@ function getURLVar(key) {
     }
 }
 
+function redirectURL(url) {
+    $(location).attr("href", url);
+}
+
+function changeStatus(status) {
+    $.ajax({
+        url: 'index.php?route=common/edit/changeStatus&token=' + getURLVar('token'),
+        dataType: 'json',
+        data:  $("form[id^='form-']").serialize() + '&route=' + getURLVar('route') + '&status=' + status + '&filter_type=' + getURLVar('filter_type'),
+        method: 'post',
+        beforeSend: function(xhr, data) {
+            //data.data = '&route=' + getURLVar('route') + '&status=' + status;
+        },
+        success: function(json) {
+            if (json['redirect']) {
+                window.location.href = json['redirect'];
+            } else {
+                html  = '<div class="alert alert-warning">';
+                html += '<i class="fa fa-warning"></i> ' + json['warning'] + '<button type="button" class="close" data-dismiss="alert">×</button>';
+                html += '</div>';
+
+                $('.panel.panel-default').before(html);
+            }
+        }
+    }).done(function () {
+        setTimeout(function () {
+            $('.alert.alert-warning').remove();
+        }, 4000);
+    });
+}
+
 $(window).on('resize', function () {
     if(window.innerWidth < 768) {
         $('#header').removeClass('wide');
@@ -358,7 +389,7 @@ $(document).ready(function() {
     }
 
     // right menu
-    $('#settings-menu').on('click', function() {
+    $('#settings-menu, .logo-image img').on('click', function() {
         left_menu_width = $('#column-left').width();
 
         if (left_menu_width > 0 && !$('#column-left').hasClass('right')) {
@@ -750,6 +781,8 @@ $(document).ready(function() {
 
     // Basic mode
     $(document).on('click', '.ba-message .close', function() {
+        $('.ba-message').remove();
+
         $.ajax({
             url: 'index.php?route=user/user/hide&basic_mode_message=hide&token=' +  getURLVar('token') + '&user_id=' + getURLVar('user_id'),
             dataType: 'json',

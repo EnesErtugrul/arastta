@@ -49,6 +49,7 @@
 
 .bulk-action-button a {
     margin-top: -5px;
+    text-decoration: none;
 }
 
 .bulk-action-activate input[type="checkbox"] {
@@ -222,4 +223,21 @@ a.editable-click:hover {
     padding: 0px 5px;
     margin-right: 2px;
     border: none;
+}
+
+.btn-manufacturer-add {
+    margin-top: -30px;
+    margin-right: 5px;
+    float: right;
+}
+
+.btn-category-add {
+    margin-top: -35px;
+    margin-right: 5px;
+    float: right;
+}
+
+#quick-manufacturer-success {
+    margin-top: 5px !important;
+    margin-bottom: -10px !important;
 }

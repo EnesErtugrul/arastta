@@ -1302,7 +1302,7 @@ CREATE TABLE IF NOT EXISTS `ar_information_description` (
   `information_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `title` varchar(64) NOT NULL,
-  `description` text NOT NULL,
+  `description` mediumtext NOT NULL,
   `meta_title` varchar(255) NOT NULL,
   `meta_description` varchar(255) NOT NULL,
   `meta_keyword` varchar(255) NOT NULL,
@@ -1344,7 +1344,7 @@ CREATE TABLE IF NOT EXISTS `ar_information_to_store` (
 -- Table structure for table `ar_invoice`
 --
 
-CREATE TABLE `ar_invoice` (
+CREATE TABLE IF NOT EXISTS `ar_invoice` (
   `invoice_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
   `invoice_date` datetime NOT NULL,
@@ -1358,7 +1358,7 @@ CREATE TABLE `ar_invoice` (
 -- Table structure for table `ar_invoice_history`
 --
 
-CREATE TABLE `ar_invoice_history` (
+CREATE TABLE IF NOT EXISTS `ar_invoice_history` (
   `invoice_history_id` int(11) NOT NULL AUTO_INCREMENT,
   `invoice_id` int(11) NOT NULL,
   `notify` tinyint(1) NOT NULL DEFAULT '0',
@@ -1429,7 +1429,7 @@ CREATE TABLE IF NOT EXISTS `ar_layout_module` (
   `layout_module_id` int(11) NOT NULL AUTO_INCREMENT,
   `layout_id` int(11) NOT NULL,
   `code` varchar(64) NOT NULL,
-  `position` varchar(14) NOT NULL,
+  `position` varchar(64) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`layout_module_id`),
   KEY `layout_id` (`layout_id`)
@@ -1499,7 +1499,7 @@ INSERT INTO `ar_length_class` (`length_class_id`, `value`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `ar_length_class_description` (
-  `length_class_id` int(11) NOT NULL AUTO_INCREMENT,
+  `length_class_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `title` varchar(32) NOT NULL,
   `unit` varchar(4) NOT NULL,
@@ -2794,7 +2794,9 @@ INSERT INTO `ar_setting` (`setting_id`, `store_id`, `code`, `key`, `value`, `ser
 (432, 0, 'config', 'config_debug_system', '0', 0),
 (433, 0, 'config', 'config_error_display', '1', 0),
 (434, 0, 'config', 'config_error_log', '0', 0),
-(435, 0, 'config', 'config_error_filename', 'error.log', 0);
+(435, 0, 'config', 'config_error_filename', 'error.log', 0),
+(436, 0, 'config', 'config_admin_template', 'basic', 0),
+(437, 0, 'config', 'config_admin_template_message', 'show', 0);
 
 -- --------------------------------------------------------
 
@@ -3085,7 +3087,7 @@ INSERT INTO `ar_weight_class` (`weight_class_id`, `value`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `ar_weight_class_description` (
-  `weight_class_id` int(11) NOT NULL AUTO_INCREMENT,
+  `weight_class_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `title` varchar(32) NOT NULL,
   `unit` varchar(4) NOT NULL,
